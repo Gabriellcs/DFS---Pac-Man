@@ -75,38 +75,35 @@ def tinyMazeSearch(problem):
 
 def depthFirstSearch(problem):
    
-    """
-    Search the deepest nodes in the search tree first (graph-search version).
-    Returns a list of actions that reaches the goal.
-    """
     from util import Stack
 
-    # Frontier: pilha de nós; cada nó = (estado, caminho_de_acoes_para_chegar_aqui)
+    # Frontier - pilha de nós
+    # Nó - estado, caminho para chegar
     frontier = Stack()
     start = problem.getStartState()
     frontier.push((start, []))
 
-    # Conjunto de estados já expandidos (visitados)
+    # Estados já visitados
     explored = set()
 
     while not frontier.isEmpty():
         state, path = frontier.pop()
 
-        # Se for objetivo, retornamos o caminho de ações
+        # Se for objetivo, retorna o caminho de ações
         if problem.isGoalState(state):
             return path
 
-        # Só expandimos se ainda não explorado
+        # Expande se ainda não foi explorado
         if state not in explored:
             explored.add(state)
 
-            # getSuccessors retorna lista de (successor, action, stepCost)
+            # Retorna o successor, action e stepCost
             for successor, action, stepCost in problem.getSuccessors(state):
                 if successor not in explored:
                     new_path = path + [action]
                     frontier.push((successor, new_path))
 
-    # Se não encontrar solução, retorna lista vazia
+    # Se não encontrar o objetivo, retorna lista vazia
     return []
 
 
